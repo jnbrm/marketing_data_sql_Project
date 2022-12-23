@@ -1,0 +1,159 @@
+select * 
+from marketing_data 
+limit 10
+
+select *
+from marketing_data
+where acceptedcmp5 = null
+
+select count(*) as rows_num
+from marketing_data
+
+select count(*) as column_num 
+from information_schema.columns
+where table_name = 'marketing_data'
+
+select age as age, count(age) as "number" from marketing_data group by age order by age;
+select mntmeatproducts, count(mntmeatproducts) as "number" from marketing_data group by mntmeatproducts order by mntmeatproducts desc;
+select AVG(mntmeatproducts) from marketing_data;
+
+select mntfishproducts as "Var", count(mntfishproducts) as "number" from marketing_data group by "Var" order by "Var" desc;
+select AVG(mntfishproducts) from marketing_data;
+
+select mntsweetproducts as "Var", count(mntsweetproducts) as "number" from marketing_data group by "Var" order by "Var" desc;
+select AVG(mntsweetproducts) from marketing_data;
+
+select mntgoldprods as "Var", count(mntgoldprods) as "number" from marketing_data group by "Var" order by "Var" desc;
+select AVG(mntgoldprods) from marketing_data;
+
+select mntwines as "Var", count(mntwines) as "number" from marketing_data group by "Var" order by "Var";
+select AVG(mntwines) from marketing_data;
+
+select mntfruits as "Var", count(mntfruits) as "number" from marketing_data group by "Var" order by "number" desc;
+select AVG(mntfruits) from marketing_data;
+
+select numdealspurchases as "Var", count(numdealspurchases) as "number" from marketing_data group by "Var" order by "Var";
+select AVG(numdealspurchases) from marketing_data;
+
+select numwebpurchases as "Var", count(numwebpurchases) as "number" from marketing_data group by "Var" order by "Var" desc;
+select AVG(numwebpurchases) from marketing_data;
+
+select numcatalogpurchases as "Var", count(numcatalogpurchases) as "number" from marketing_data group by "Var" order by "Var" desc;
+select AVG(numcatalogpurchases) from marketing_data;
+
+select numstorepurchases as "Var", count(numstorepurchases) as "number" from marketing_data group by "Var" order by "Var";
+select AVG(numstorepurchases) from marketing_data;
+
+
+select acceptedcmp1 as "Var", count(mntfishproducts) as "number" from marketing_data group by "Var" order by "Var";
+select acceptedcmp2 as "Var", count(mntfishproducts) as "number" from marketing_data group by "Var" order by "Var";
+select acceptedcmp3 as "Var", count(mntfishproducts) as "number" from marketing_data group by "Var" order by "Var";
+select acceptedcmp4 as "Var", count(mntfishproducts) as "number" from marketing_data group by "Var" order by "Var";
+select acceptedcmp5 as "Var", count(mntfishproducts) as "number" from marketing_data group by "Var" order by "Var";
+select response as "Var", count(mntfishproducts) as "number" from marketing_data group by "Var" order by "Var";
+select complain as "Var", count(mntfishproducts) as "number" from marketing_data group by "Var" order by "Var";
+
+
+select marital_married as "Var", count(mntfishproducts) as "number" from marketing_data group by "Var" order by "Var";
+
+          
+select mntmeatproducts as "a", count(age) as "number" from marketing_data where complain = 1 group by "a" order by "a";
+
+select * from marketing_data
+
+select avg(income) from marketing_data;
+select max(income) from marketing_data;
+select min(income) from marketing_data;
+
+alter table marketing_data add Segment varchar(15)
+
+update marketing_data set segment = 'Low' where income <= 35000;
+update marketing_data set segment = 'Mid_Low' where income > 35000 and income <= 51000;
+update marketing_data set segment = 'Mid_Hi' where income > 51000 and income <= 80000;
+update marketing_data set segment = 'Hi' where income > 80000;
+
+select min(income), max(income) from marketing_data
+
+select segment,
+avg(income) as "Income",
+avg(mntwines) as "Wines",
+avg(mntfruits) as "Fruits",
+avg(mntfishproducts) as "Fish",
+avg(mntsweetproducts) as "Sweet",
+avg(mntgoldprods) as "Gold",
+avg(numdealspurchases) as "Deals",
+avg(numwebpurchases) as "Web",
+avg(numcatalogpurchases) as "Catalogue"
+from marketing_data
+group by 1
+order by 2
+
+select segment as "Segment",
+min(mnttotal) as "Minimum Expenditure",
+max(mnttotal) as "Maximum Expenditure",
+avg(mnttotal) as "Avg Expenditure"
+from marketing_data 
+group by segment
+order by 4
+
+drop table segment_marketing 
+
+select segment as segment,
+mnttotal as "Average Expenditure",
+mntwines*100/mnttotal as "Wines",
+mntfruits*100/mnttotal as "Fruits",
+mntfishproducts*100/mnttotal as "Fish",
+mntsweetproducts*100/mnttotal as "Sweet",
+mntgoldprods*100/mnttotal as "Gold",
+mntmeatproducts*100/mnttotal as "Meat",
+numdealspurchases as "Deals",
+numwebpurchases as "Web",
+numcatalogpurchases as "Catalogue"
+into segment_marketing
+from marketing_data
+
+select * from segment_marketing
+
+select segment as "Segment",
+avg("Wines") as "Wines",
+avg("Fruits") as "Fruits",
+avg("Fish") as "Fish",
+avg("Sweet") as "Sweet",
+avg("Gold") as "Gold",
+avg("Meat") as "Meat"
+from segment_marketing
+group by 1
+
+select segment as "Segment",
+avg(acceptedcmp1)*100 as "Campaign 1",
+avg(acceptedcmp2)*100 as "Campaign 2",
+avg(acceptedcmp3)*100 as "Campaign 3",
+avg(acceptedcmp4)*100 as "Campaign 4",
+avg(acceptedcmp5)*100 as "Campaign 5",
+avg(response)*100 as "Response",
+avg(Complain)*100 as "Complain"
+from marketing_data
+group by 1
+
+select segment as "Segment",
+avg(kidhome)*100 as "Kidhome",
+avg(teenhome)*100 as "Teenhome",
+avg(marital_single)*100 as "Single",
+avg(marital_married)*100 as "Married",
+avg(marital_divorced)*100 as "Divorced",
+avg(marital_together)*100 as "Together",
+avg(marital_widow)*100 as "Widowed",
+avg(education_basic)*100 as "Basic Ed",
+avg(education_graduation)*100 as "Graduate",
+avg(education_master)*100 as "Master",
+avg(education_phd)*100 as "PhD",
+avg(numdealspurchases)*100 as "Deals",
+avg(numstorepurchases)*100 as "Store",
+avg(numcatalogpurchases)*100 as "Catalogue",
+avg(numwebvisitsmonth)*100 as "Web Visit",
+avg(numwebpurchases)*100 as "WebPur"
+from marketing_data
+group by 1
+order by 2
+
+select segment, count(segment) from marketing_data group by 1
